@@ -1,0 +1,16 @@
+[
+{
+  "modid": "meatrespawner",
+  "name": "Meat Respawner",
+  "description": "Adds a block simular to the Meat Effigy from Don't starve",
+  "version": "0.0.0.0",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["alex34567"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
