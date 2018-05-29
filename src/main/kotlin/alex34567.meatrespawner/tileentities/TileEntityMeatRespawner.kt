@@ -15,19 +15,19 @@ import net.minecraft.util.DamageSource
 import net.minecraft.world.WorldServer
 
 class TileEntityMeatRespawner : TileEntity() {
-    var player_: GameProfile? = null
+    private var _player: GameProfile? = null
     var player: GameProfile?
-        get() = player_
+        get() = _player
         set(value) {
-            if (player_ != value) {
-                player_ = value
+            if (_player != value) {
+                _player = value
                 markDirty()
             }
         }
 
     override fun readFromNBT(tag: NBTTagCompound) {
         super.readFromNBT(tag)
-        player_ = tag.getCompoundTag("player").gameProfile
+        _player = tag.getCompoundTag("player").gameProfile
     }
 
     override fun writeToNBT(tag: NBTTagCompound): NBTTagCompound {
