@@ -2,6 +2,7 @@ package alex34567.meatrespawner.tileentities
 
 import alex34567.meatrespawner.blocks.ModBlocks
 import alex34567.meatrespawner.capability.meatRespawner
+import alex34567.meatrespawner.config.ModConfig
 import alex34567.meatrespawner.util.RespawnPos
 import alex34567.meatrespawner.util.nbtextensions.NBT
 import alex34567.meatrespawner.util.nbtextensions.gameProfile
@@ -36,7 +37,7 @@ class TileEntityMeatRespawner : TileEntity() {
 
         fun canRespawnPlayer(player: EntityPlayerMP): Boolean {
             val respawnerCapability = player.meatRespawner ?: return false
-            var world = player.world as WorldServer
+            var world = player.world
             val pos = respawnerCapability.pos ?: return false
             if (pos.dimId != player.dimension) {
                 world = world.minecraftServer!!.getWorld(pos.dimId)
@@ -49,6 +50,10 @@ class TileEntityMeatRespawner : TileEntity() {
                 return false
             }
             if (playerProfile.id != player.uniqueID) {
+                respawnerCapability.pos = null
+                return false
+            }
+            if (!ModConfig.betweenDim && pos.dimId != player.dimension) {
                 respawnerCapability.pos = null
                 meatRespawner.player = null
                 return false
