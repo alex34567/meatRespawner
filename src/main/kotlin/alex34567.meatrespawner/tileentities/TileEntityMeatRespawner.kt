@@ -13,18 +13,21 @@ import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.DamageSource
 import net.minecraft.world.WorldServer
-import kotlin.properties.Delegates
 
 class TileEntityMeatRespawner : TileEntity() {
-    var player: GameProfile? by Delegates.observable<GameProfile?>(null, { _, oldValue, newValue ->
-        if (oldValue != newValue) {
-            markDirty()
+    var player_: GameProfile? = null
+    var player: GameProfile?
+        get() = player_
+        set(value) {
+            if (player_ != value) {
+                player_ = value
+                markDirty()
+            }
         }
-    })
 
     override fun readFromNBT(tag: NBTTagCompound) {
         super.readFromNBT(tag)
-        player = tag.getCompoundTag("player").gameProfile
+        player_ = tag.getCompoundTag("player").gameProfile
     }
 
     override fun writeToNBT(tag: NBTTagCompound): NBTTagCompound {
