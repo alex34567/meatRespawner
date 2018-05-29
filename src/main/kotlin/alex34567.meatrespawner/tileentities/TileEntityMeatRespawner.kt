@@ -11,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayerMP
 import net.minecraft.init.Blocks
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.tileentity.TileEntity
+import net.minecraft.util.DamageSource
 import net.minecraft.world.WorldServer
 import kotlin.properties.Delegates
 
@@ -35,30 +36,27 @@ class TileEntityMeatRespawner : TileEntity() {
 
     companion object {
 
-        fun canRespawnPlayer(player: EntityPlayerMP): Boolean {
+        fun canRespawnPlayer(player: EntityPlayerMP, deathType: DamageSource): Boolean {
             val respawnerCapability = player.meatRespawner ?: return false
             var world = player.world
             val pos = respawnerCapability.pos ?: return false
             if (pos.dimId != player.dimension) {
                 world = world.minecraftServer!!.getWorld(pos.dimId)
             }
-            if (world.getBlockState(pos.blockPos) != ModBlocks.MEAT_RESPAWNER.defaultState) return false
-            val meatRespawner = world.getTileEntity(pos.blockPos) as? TileEntityMeatRespawner ?: return false
+            val meatRespawner = world.getTileEntity(pos.blockPos);
+            if (world.getBlockState(pos.blockPos) != ModBlocks.MEAT_RESPAWNER.defaultState ||
+                    meatRespawner !is TileEntityMeatRespawner) {
+                respawnerCapability.pos = null
+                return false
+            }
             val playerProfile = meatRespawner.player
-            if (playerProfile == null) {
+            if (playerProfile == null || playerProfile.id != player.uniqueID) {
                 respawnerCapability.pos = null
                 return false
             }
-            if (playerProfile.id != player.uniqueID) {
-                respawnerCapability.pos = null
-                return false
-            }
-            if (!ModConfig.betweenDim && pos.dimId != player.dimension) {
-                respawnerCapability.pos = null
-                meatRespawner.player = null
-                return false
-            }
-            if (world.getBlockState(pos.blockPos.up()) != Blocks.AIR.defaultState) {
+            if ((!ModConfig.betweenDim && pos.dimId != player.dimension) ||
+                    world.getBlockState(pos.blockPos.up()) != Blocks.AIR.defaultState ||
+                    ModConfig.deathCauseBlackList.contains(deathType.damageType)) {
                 respawnerCapability.pos = null
                 meatRespawner.player = null
                 return false

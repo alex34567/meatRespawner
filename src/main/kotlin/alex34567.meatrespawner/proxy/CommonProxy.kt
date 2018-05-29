@@ -49,11 +49,11 @@ open class CommonProxy {
         @SubscribeEvent(priority = EventPriority.HIGHEST)
         fun playerDies(event: LivingDeathEvent) {
             val player = event.entity as? EntityPlayerMP ?: return
-            val respawnerCapability = player.meatRespawner ?: return
-            if (!TileEntityMeatRespawner.canRespawnPlayer(player)) {
+            if (!TileEntityMeatRespawner.canRespawnPlayer(player, event.source)) {
                 return
             }
             event.isCanceled = true
+            val respawnerCapability = player.meatRespawner ?: return
             respawnerCapability.deathCause = event.source
             player.health = 1f
         }
@@ -69,7 +69,7 @@ open class CommonProxy {
                 val respawnerCapability = player.meatRespawner ?: continue
                 val source = respawnerCapability.deathCause ?: continue
                 val respawnPos = respawnerCapability.pos
-                val canRespawn = TileEntityMeatRespawner.canRespawnPlayer(player)
+                val canRespawn = TileEntityMeatRespawner.canRespawnPlayer(player, source)
                 if (!canRespawn || respawnPos == null) {
                     player.attackEntityFrom(source, Float.MAX_VALUE)
                     respawnerCapability.deathCause = null
