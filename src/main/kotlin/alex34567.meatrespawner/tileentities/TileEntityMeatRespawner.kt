@@ -46,7 +46,7 @@ class TileEntityMeatRespawner : TileEntity() {
             if (pos.dimId != player.dimension) {
                 world = world.minecraftServer!!.getWorld(pos.dimId)
             }
-            val meatRespawner = world.getTileEntity(pos.blockPos);
+            val meatRespawner = world.getTileEntity(pos.blockPos)
             if (world.getBlockState(pos.blockPos) != ModBlocks.MEAT_RESPAWNER.defaultState ||
                     meatRespawner !is TileEntityMeatRespawner) {
                 respawnerCapability.pos = null

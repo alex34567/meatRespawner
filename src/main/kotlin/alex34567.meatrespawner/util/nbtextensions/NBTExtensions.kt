@@ -12,7 +12,7 @@ val BlockPos.NBT: NBTTagCompound
 val NBTTagCompound.isValidBlockPos
     get() = hasKey("X", 99) && hasKey("Y", 99) && hasKey("Z", 99)
 
-val NBTTagCompound.blockPos
+val NBTTagCompound.blockPos: BlockPos
     get() = NBTUtil.getPosFromTag(this)
 
 val GameProfile.NBT: NBTTagCompound

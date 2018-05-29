@@ -21,7 +21,7 @@ class CapabilityProvider : ICapabilitySerializable<NBTTagCompound> {
 
     override fun serializeNBT(): NBTTagCompound {
         val tag = NBTTagCompound()
-        val meatRespawnerTag = meatRespawner.NBT
+        val meatRespawnerTag = meatRespawner.nbt
         if (meatRespawnerTag != null) {
             tag.setTag("meatRespawnerBound", meatRespawnerTag)
         }
@@ -31,7 +31,7 @@ class CapabilityProvider : ICapabilitySerializable<NBTTagCompound> {
     override fun deserializeNBT(tag: NBTTagCompound) {
         if (tag.hasKey("meatRespawnerBound")) {
             val meatRespawnerTag = tag.getTag("meatRespawnerBound")
-            meatRespawner.NBT = meatRespawnerTag
+            meatRespawner.nbt = meatRespawnerTag
         }
     }
 }

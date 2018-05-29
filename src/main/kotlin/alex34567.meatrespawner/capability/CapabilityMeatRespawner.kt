@@ -12,14 +12,14 @@ import net.minecraftforge.common.capabilities.Capability
 class CapabilityMeatRespawner private constructor() {
     var pos: RespawnPos? = null
     var deathCause: DamageSource? = null
-    var NBT: NBTBase?
+    var nbt: NBTBase?
         get() = Capabilities.MEAT_RESPAWNER.writeNBT(this, null)
         set(value) = Capabilities.MEAT_RESPAWNER.readNBT(this, null, value)
 
     class Storage : Capability.IStorage<CapabilityMeatRespawner> {
         override fun writeNBT(capability: Capability<CapabilityMeatRespawner>,
                               instance: CapabilityMeatRespawner, side: EnumFacing?): NBTBase? {
-            return instance.pos?.NBT
+            return instance.pos?.nbt
         }
 
         override fun readNBT(capability: Capability<CapabilityMeatRespawner>, instance: CapabilityMeatRespawner,

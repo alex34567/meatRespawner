@@ -8,7 +8,7 @@ import net.minecraft.util.math.BlockPos
 data class RespawnPos(val blockPos: BlockPos, val dimId: Int) {
     constructor(tag: NBTTagCompound) : this(tag.blockPos, tag.getInteger("Dim"))
 
-    val NBT: NBTTagCompound
+    val nbt: NBTTagCompound
         get() {
             val tag = blockPos.NBT
             tag.setInteger("Dim", dimId)

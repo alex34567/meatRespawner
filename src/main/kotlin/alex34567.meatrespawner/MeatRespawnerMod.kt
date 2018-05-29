@@ -40,7 +40,7 @@ class MeatRespawnerMod {
     @Mod.EventHandler
     fun preInit(event: FMLPreInitializationEvent) {
         config = Configuration(File(event.modConfigurationDirectory, "meatRespawner.cfg"))
-        logger = event.getModLog()
+        logger = event.modLog
         ModConfig.syncConfig()
         TileEntities.preInit()
         Capabilities.preInit()

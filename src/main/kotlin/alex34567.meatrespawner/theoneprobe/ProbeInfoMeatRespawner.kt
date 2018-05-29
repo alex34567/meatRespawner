@@ -31,12 +31,10 @@ class ProbeInfoMeatRespawner : IProbeInfoProvider {
                 probeInfo.text(TextStyleClass.ERROR.toString() + "Cannot respawn this player")
             }
         } else {
-            if (playerProfile == null) {
-                probeInfo.text(TextStyleClass.ERROR.toString() + "Unbinded")
-            } else if (canRespawn) {
-                probeInfo.text(TextStyleClass.OK.toString() + "Can respawn " + playerProfile.name)
-            } else {
-                probeInfo.text(TextStyleClass.ERROR.toString() + "Cannot respawn " + playerProfile.name)
+            when {
+                playerProfile == null -> probeInfo.text(TextStyleClass.ERROR.toString() + "Unbinded")
+                canRespawn -> probeInfo.text(TextStyleClass.OK.toString() + "Can respawn " + playerProfile.name)
+                else -> probeInfo.text(TextStyleClass.ERROR.toString() + "Cannot respawn " + playerProfile.name)
             }
         }
     }
